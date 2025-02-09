@@ -16,21 +16,26 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
+    
     return MaterialApp(
-      title: 'Flutter Demo',
+      // Title of the app
+      title: 'Image Toggle App',
       theme: ThemeData(
-        
+        // Sets the theme
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+
+    // MyHomePage set as the home screen
+      home: const MyHomePage(title: 'Image Toggle App'),
     );
   }
 }
 
+// Stateful widget that allows changes in UI over time
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
@@ -41,6 +46,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 // This class can control animations
+// Manages logic of home page
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
   int _counter = 0;
   bool _isFirstImage = true; // Tracks which image is displayed
@@ -48,18 +54,24 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   late Animation<double> _fadeAnimation; // Controls fade transition effect
   
   @override
+  // Runs once the widget is created
   void initState(){
     super.initState();
     
     _animationController = AnimationController(
+      // Prevents unnecessary animations when screen isn't visible
       vsync: this,
+      // Duration of animation, set to 0.5s
       duration: const Duration(milliseconds: 500),
     );
     
+    // Ease-in-out smooth fade transition
     _fadeAnimation = CurvedAnimation(
       parent: _animationController, 
       curve: Curves.easeInOut,
     );
+
+    _animationController.forward(); // Starts fade-in animation immediately
   }
   
 
@@ -76,6 +88,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
       setState(() {
         _isFirstImage = !_isFirstImage;
       });
+      // Plays fade-in animation
       _animationController.forward();
     });
   }
@@ -120,6 +133,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
             ),
             const SizedBox(height: 20),
             
+            // Pressing this switches the displayed image
             ElevatedButton(
               onPressed: _toggleImage, 
               child: const Text('Toggle Image'),
