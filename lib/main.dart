@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 
 /*
@@ -9,10 +7,12 @@ import 'package:flutter/material.dart';
 - Animation for smooth transitions
  */
 
+// Starts the Flutter app by rendering MyApp
 void main() {
   runApp(const MyApp());
 }
 
+// Root widget, stateless widget
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -40,11 +40,12 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+// This class can control animations
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
   int _counter = 0;
-  bool _isFirstImage = true;
-  late AnimationController _animationController;
-  late Animation<double> _fadeAnimation;
+  bool _isFirstImage = true; // Tracks which image is displayed
+  late AnimationController _animationController; // Controls animation
+  late Animation<double> _fadeAnimation; // Controls fade transition effect
   
   @override
   void initState(){
@@ -69,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     });
   }
 
-  // Method
+  // Method to toggle between two images
   void _toggleImage(){
     _animationController.reverse().then((_){
       setState(() {
@@ -79,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
     });
   }
 
-  // Method
+  // Method to clean up animation resources
   @override
   void dispose(){
     _animationController.dispose();
@@ -108,6 +109,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(height:30),
+            
             FadeTransition(
               opacity: _fadeAnimation,
               child: Image.asset(
@@ -117,6 +119,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
               ),
             ),
             const SizedBox(height: 20),
+            
             ElevatedButton(
               onPressed: _toggleImage, 
               child: const Text('Toggle Image'),
